@@ -1,3 +1,46 @@
+function templateNota(){
+    const div = document.createElement('div')
+    div.className='nota'
+    div.id='nota'
+
+    div.contentEditable=true
+    const texto = document.createTextNode('Edita la nota')
+    div.appendChild(texto)
+    const root= document.getElementById('root')
+    root.appendChild(div)
+    btnAgregar.disabled = true
+    btnGuardar.disabled = false
+
+    // Creamos el botón de guardar
+    const btnGuardar = document.createElement('button')
+    const textBtnGuardar = document.createTextNode('Guardar nota')
+    btnGuardar.appendChild(textBtnGuardar)
+    
+    btnGuardar.onclick = function(){
+        // alert('nota guardada')
+        setLocalInfo(nota)
+        document.getElementById('nota'),remove()
+        textBtnGuardar.remove()
+        btnAgregar.disabled = false
+    }
+    
+    root.appendChild(btnGuardar)
+}
+    
+const btnAgregar = document.createElement('button')
+const textBtnAgregar= document.createTextNode('Añade una nota')
+btnAgregar.appendChild(textBtnAgregar)
+root.appendChild(btnAgregar)
+
+// btnAgregar.addEventListener('click', function(){
+//     templatenota()
+// })
+btnAgregar.onclick = templateNota
+
+
+
+
+
 document.addEventListener('DOMContentLoaded',function(){
     showInfo();
 })
