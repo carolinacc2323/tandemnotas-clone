@@ -64,7 +64,19 @@ function getInfo(){
 function setLocalInfo(nota){
     // guardaría la info en localStorage
     const clave = Date.now();
-  localStorage.setItem(clave,getInfo(nota))
+    localStorage.setItem(clave,getInfo(nota))
+}
+// function eliminar nota
+function eliminarNota(clave){
+    // alert (clave)
+    localStorage.removeItem(clave)
+    showInfo()
+}
+// function edita nota
+function editarNota(clave){
+    // alert ('la nota se edita')
+    const elemento = document.getElementById(clave)
+    elemento.contentEditable = true
 }
 // leerla y sacarla por pantalla
 function showInfo(){
@@ -75,10 +87,14 @@ function showInfo(){
     for (let index = 0; index < localStorage.length; index++) {
         let clave = localStorage.key(index)
         let valor = localStorage[clave]
-        console.log(valor)
+        // console.log(valor)
         let elemento = `
-        <div class='lista-notas'>
+        <div id="${clave}" class='lista-notas'>
+        <button onclick= 'eliminarNota(${clave})'> <i class="bi bi-trash"></i> </button>
+        <button onclick= 'editarNota(${clave})'> <i class="bi bi-pencil"></i> </button>
+        <p>
         ${valor}
+        </p>
         </div>
         `
         document.getElementById('show-notas').innerHTML+= elemento
