@@ -2,77 +2,70 @@ function templateNota(){
     const div = document.createElement('div')
     div.className='nota'
     div.id='nota'
-
-    div.contentEditable=true
-    const texto = document.createTextNode('Edita la nota')
+    div.contentEditable = true
+    const texto = document.createTextNode('edita la nota ')
     div.appendChild(texto)
-    const root= document.getElementById('root')
+    const root = document.getElementById('root')
     root.appendChild(div)
-    btnAgregar.disabled = true
-    btnGuardar.disabled = false
-
-    // Creamos el botón de guardar
-    const btnGuardar = document.createElement('button')
-    const textBtnGuardar = document.createTextNode('Guardar nota')
+    btnAgregar.disabled=true
+    // creamos el btn guardar
+    const btnGuardar= document.createElement('button')
+    const textBtnGuardar= document.createTextNode('Guardar Nota')
     btnGuardar.appendChild(textBtnGuardar)
-    
-    btnGuardar.onclick = function(){
-        // alert('nota guardada')
+    btnGuardar.onclick= function (){
         setLocalInfo(nota)
-        document.getElementById('nota'),remove()
-        textBtnGuardar.remove()
-        btnAgregar.disabled = false
+        document.getElementById('nota').remove()
+        btnGuardar.remove()
+        btnAgregar.disabled=false
+        showInfo()
     }
-    
     root.appendChild(btnGuardar)
 }
-    
+// button agregar nota
 const btnAgregar = document.createElement('button')
-const textBtnAgregar= document.createTextNode('Añade una nota')
+btnAgregar.onclick=templateNota
+const textBtnAgregar= document.createTextNode('Agrega nota')
 btnAgregar.appendChild(textBtnAgregar)
 root.appendChild(btnAgregar)
-
-// btnAgregar.addEventListener('click', function(){
-//     templatenota()
-// })
-btnAgregar.onclick = templateNota
-
-
-
-
-
+// button borrar notas
+//boton con id btn-clean-notas
+const btnCleanNotas = document.createElement('button')
+btnCleanNotas.onclick=function(){
+    cleanInfo()
+}
+const textBtnCleanNotas = document.createTextNode('Limpiar Notas')
+btnCleanNotas.appendChild(textBtnCleanNotas)
+root.appendChild(btnCleanNotas)
 document.addEventListener('DOMContentLoaded',function(){
     showInfo();
 })
-
+//crear el div con id show-notas
+const showNotas = document.createElement('div')
+showNotas.id= 'show-notas'
+root.appendChild(showNotas)
+// crear bo
 document.getElementById('btn-add-nota').addEventListener('click', function(){
     getInfo(nota)
     setLocalInfo(nota)
     showInfo()
-    
 })
 document.getElementById('btn-clean-notas').addEventListener('click', function(){
     cleanInfo()
     showInfo()
-
 })
-
-// recoger la información 
+// recoger la información
 function getInfo(){
     // capturamos lo que el usuario introduce
     let nota = document.getElementById('nota').innerHTML
     console.log(nota)
     return nota
-    
 }
 // alamacenarla en localStorage
 function setLocalInfo(nota){
     // guardaría la info en localStorage
     const clave = Date.now();
   localStorage.setItem(clave,getInfo(nota))
-   
 }
-
 // leerla y sacarla por pantalla
 function showInfo(){
     // leerla y mostrarla por pantalla
@@ -82,24 +75,19 @@ function showInfo(){
     for (let index = 0; index < localStorage.length; index++) {
         let clave = localStorage.key(index)
         let valor = localStorage[clave]
-        console.log(valor)  
+        console.log(valor)
         let elemento = `
         <div class='lista-notas'>
         ${valor}
         </div>
         `
         document.getElementById('show-notas').innerHTML+= elemento
-
     }
-
-    
 }
-
 // limpiarla
-
 function cleanInfo(){
     // limpiar el local storage y limpiar la pantaal
     // Elimina todos los elementos
 localStorage.clear();
-    console.log('En localstorage no hay notas')
+   showInfo();
 }
